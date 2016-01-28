@@ -7,13 +7,16 @@
     = csrf_meta_tags
  
   %body
-    %h1.title Makeup Room
+    %header{:class => "navbar navbar-fixed-top navbar-inverse"}
+      %h1.title Makeup Room
     #navigation
       #tabs
-        %ul
-          - if not false
+        %ul{:class => "nav navbar-nav navbar-right"}
+          - if true
             = render :partial => 'layouts/menuItem', :collection => [ |
-              ['Login', '#']                        |
+              ['Home', root_path],                        |
+              ['Login', '#'],                      |
+              ['Sign up', signup_path]            |
             ] |
             -
           - else
@@ -27,13 +30,6 @@
                 -#['Invoices', invoices_path]            |
               ] |
             - 
-            -##div{'style' => "float: left;margin-left: 30px"}
-              -#= render :partial => 'layouts/menuItem', :collection => [ |
-                -#['Domains', '#'], |
-                -#['Google apps', '#'], |
-                -#['Other', '#'] |
-              -#] |
-            -#-
             %div{'style' => "float: right;"}
               -#= render :partial => 'layouts/menuItem', :collection => [               |
                 -#['Your profile', profile_path],                               |
@@ -46,8 +42,15 @@
         #notice.message= flash[:notice]
       - elsif flash[:warning]
         #warning.message= flash[:warning]
-
-      = yield
+      #container
+        = yield
+    #aside
+      #section
+        %h2 Tools
+        %input.testImg#getPhoto{:type => "file"} 
+        %button#getActor Upload Actor
+      #section
+        = render :partial => 'layouts/cloud'
     #footer
       &nbsp;
       4U 2016
