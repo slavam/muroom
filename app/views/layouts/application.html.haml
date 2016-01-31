@@ -5,9 +5,10 @@
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
     = csrf_meta_tags
+
  
   %body
-    %header{:class => "navbar navbar-fixed-top navbar-inverse"}
+    %header
       %h1.title Makeup Room
     #navigation
       #tabs
@@ -42,6 +43,8 @@
         #notice.message= flash[:notice]
       - elsif flash[:warning]
         #warning.message= flash[:warning]
+      - elsif flash[:success]
+        #warning.message= flash[:success]
       #container
         = yield
     #aside
@@ -54,4 +57,4 @@
     #footer
       &nbsp;
       4U 2016
-      
+    = debug(params) if Rails.env.development?  
