@@ -30,6 +30,7 @@ class CategoryTest < ActiveSupport::TestCase
   
   test "weight should be integer" do
     @category.weight = 1.1
+    # assert_instance_of Fixnum, @category.weight
     assert_not @category.valid?
   end
   

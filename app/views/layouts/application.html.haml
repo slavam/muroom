@@ -12,32 +12,34 @@
       %h1.title Makeup Room
     #navigation
       #tabs
-        %ul{:class => "nav navbar-nav navbar-right"}
-          - if true
-            = render :partial => 'layouts/menuItem', :collection => [ |
-              ['Home', root_path],                        |
-              ['Login', '#'],                      |
-              ['Sign up', signup_path]            |
-            ] |
-            -
-          - else
-            %div{'style' => "float: left;"}
-              -#= render :partial => 'layouts/menuItem', :collection => [ |
+        %ul
+          = render :partial => 'layouts/menuItem', :collection => [ |
+            ['Home', root_path]     |        
+          ] |
+          %div{'style' => "float: right;"}
+            - if !logged_in?
+              = render :partial => 'layouts/menuItem', :collection => [ |
+                ['Login', 'login'],                      |
+                ['Sign up', signup_path]            |
+              ] |
+            - else
+              = render :partial => 'layouts/menuItem', :collection => [ |
+                ['Logout', '#']         |
+              ] |
+              - 
+              %div{'style' => "float: right;"}
+                -#= render :partial => 'layouts/menuItem', :collection => [               |
                 -#['Accounts', accounts_path],     |
                 -#['Projects', projects_path],     |
                 -#['Activities', activities_path], |
                 -#['Leads', leads_path],            |
                 -#['Expenses', expenses_path],            |
-                -#['Invoices', invoices_path]            |
-              ] |
-            - 
-            %div{'style' => "float: right;"}
-              -#= render :partial => 'layouts/menuItem', :collection => [               |
-                -#['Your profile', profile_path],                               |
-                -#['Admin settings', settings_path, nil, !current_user.admin?], |
-                -#['Logout', user_session_path, { :method => :delete }]         |
-              ] |
-            -
+                  -#['Your profile', profile_path],                               |
+                  -#['Admin settings', settings_path, nil, !current_user.admin?], |
+                  -#['Logout', user_session_path, { :method => :delete }]         |
+                ] |
+              -
+              
     #main
       - if flash[:notice]
         #notice.message= flash[:notice]
@@ -57,4 +59,25 @@
     #footer
       &nbsp;
       4U 2016
+      #container
+        #nav
+          %ul{:class => "nav navbar-nav navbar-right dropdown"}
+            - if logged_in?
+              %li
+                = link_to "Users", '#'
+              %li{:class => "dropdown"}
+                %a{:href => "#", :class => "dropdown-toggle", 'data-toggle' => "dropdown"}
+                  Account 
+                  %b{:class =>"caret"}
+                %ul{:class => "dropdown-menu"}
+                  %li
+                    = link_to "Profile", current_user
+                  %li
+                    = link_to "Settings", '#' 
+                  %li{:class => "divider"}
+                  %li
+                    = link_to "Log out", logout_path, method: "delete"
+            - else 
+              %li
+                = link_to "Log in", login_path
     = debug(params) if Rails.env.development?  
