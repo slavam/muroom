@@ -1,0 +1,102 @@
+- provide(:title, 'Actor') 
+%h1 Actor
+
+%div{:class => "row"}
+  %div{:class => "col-md-6 col-md-offset-3"}
+    = form_for(@actor, html: { multipart: true }) do |f| 
+      = render 'shared/error_messages', object: f.object
+      %canvas{:id => "canvas1", :width => "600", :height => "400", :style => "border: 1px solid black;"}
+        This text is displayed if your browser does not support HTML5 Canvas.
+      %span.picture
+        = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+      = f.label :title 
+      = f.text_field :title, class: 'form-control'
+      = f.hidden_field :eye_right_x, class: 'form-control' 
+      = f.hidden_field :eye_right_y, class: 'form-control' 
+      = f.hidden_field :eye_left_x, class: 'form-control' 
+      = f.hidden_field :eye_left_y, class: 'form-control' 
+      %br
+      = f.submit "Create actor", class: "btn btn-primary"
+
+// %input.testImg#getPhoto{:type => "file"} 
+// %button#getActor Upload Actor
+
+
+:javascript        
+
+  $(function(){
+    $('#actor_picture').bind('change', function() {
+      var imgFile = this;
+      if (imgFile.files && imgFile.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          var dataUri = event.target.result;
+          var img = new Image();
+          img.src = dataUri;
+          resizeImage(img);
+        };
+        reader.onerror = function(event) {
+          console.error("File could not be read! Code " + event.target.error.code);
+        };
+        reader.readAsDataURL(imgFile.files[0]);
+      };
+    });
+    function resizeImage(img){
+      var canvas = document.getElementById('canvas1');
+      var ctx = canvas.getContext("2d");
+      var isVisibleCross = false;
+      var firstClick = {x: 100, y: 100};
+      var isAdjust;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.onclick = function(e){
+        var coords = canvas.getBoundingClientRect();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img,0,0);
+        if(isVisibleCross){
+          isVisibleCross = false;
+          drawCircle(firstClick.x, firstClick.y);
+          // firstClick.x = e.clientX-coords.left;
+          // firstClick.y = e.clientY-coords.top;
+          drawCircle(e.clientX-coords.left, e.clientY-coords.top);
+          if(confirm("Are circles on eyes?")){
+            if(firstClick.x < e.clientX-coords.left){
+              $('#actor_eye_right_x').val( Math.floor(firstClick.x));
+              $('#actor_eye_right_y').val( Math.floor(firstClick.y));
+              $('#actor_eye_left_x').val( Math.floor(e.clientX-coords.left));
+              $('#actor_eye_left_y').val( Math.floor(e.clientY-coords.top));
+            } else {
+              $('#actor_eye_right_x').val( Math.floor(e.clientX-coords.left));
+              $('#actor_eye_right_y').val( Math.floor(e.clientY-coords.top));
+              $('#actor_eye_left_x').val( Math.floor(firstClick.x));
+              $('#actor_eye_left_y').val( Math.floor(firstClick.y));
+            }
+            // actor = img;
+            // var cs = new CanvasState(document.getElementById('canvas1'));
+            // cs.draw();
+          } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img,0,0);
+          };
+        } else {
+          isVisibleCross = true;
+          firstClick.x = e.clientX-coords.left;
+          firstClick.y = e.clientY-coords.top;
+          drawCross(firstClick.x, firstClick.y);
+        }
+      };
+      function drawCross(){
+          ctx.beginPath();
+          ctx.moveTo(firstClick.x-10, firstClick.y);
+          ctx.lineTo(firstClick.x+10, firstClick.y);
+          ctx.moveTo(firstClick.x, firstClick.y-10);
+          ctx.lineTo(firstClick.x, firstClick.y+10);
+          ctx.stroke();
+      };
+      function drawCircle(x, y){
+        ctx.beginPath();
+        ctx.arc(x,y,15,0,2*Math.PI);
+        ctx.stroke();
+      };
+      ctx.drawImage(img,0,0);
+    };
+  })    

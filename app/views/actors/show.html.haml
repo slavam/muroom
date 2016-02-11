@@ -1,0 +1,8 @@
+- provide(:title, @actor.title)
+%span.content
+  = @actor.description
+  = image_tag @actor.picture.url if @actor.picture?
+  %span.timestamp
+    Posted 
+    = time_ago_in_words(@actor.created_at) 
+    ago.

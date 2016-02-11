@@ -24,7 +24,9 @@
               ] |
             - else
               = render :partial => 'layouts/menuItem', :collection => [ |
-                ['Logout', '#']         |
+                ['Work', '#'],         |
+                ['Actor', new_actor_path],         |
+                ['Logout', logout_path, method: "delete"]         |
               ] |
               - 
               %div{'style' => "float: right;"}
@@ -53,7 +55,7 @@
       #section
         %h2 Tools
         %input.testImg#getPhoto{:type => "file"} 
-        %button#getActor Upload Actor
+        %button#getActor Upload Actor      
       #section
         = render :partial => 'layouts/cloud'
     #footer
@@ -81,3 +83,5 @@
               %li
                 = link_to "Log in", login_path
     = debug(params) if Rails.env.development?  
+    
+  
