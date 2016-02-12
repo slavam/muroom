@@ -1,8 +1,10 @@
-- provide(:title, @actor.title)
-%span.content
+- provide(:title, 'Actor')
+%h1 
+  = @actor.title
+%span.timestamp
+  Posted 
+  = time_ago_in_words(@actor.created_at) 
+  ago.
+%p
   = @actor.description
-  = image_tag @actor.picture.url if @actor.picture?
-  %span.timestamp
-    Posted 
-    = time_ago_in_words(@actor.created_at) 
-    ago.
+= image_tag @actor.picture.url, height: "200" if @actor.picture?

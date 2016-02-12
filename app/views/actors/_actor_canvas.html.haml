@@ -1,0 +1,4 @@
+%canvas{:id => "canvas1", :width => "600", :height => "400", :style => "border: 1px solid black;"}
+  This text is displayed if your browser does not support HTML5 Canvas.
+%span.picture
+  = locals[:f].file_field :picture, accept: 'image/jpeg,image/gif,image/png'

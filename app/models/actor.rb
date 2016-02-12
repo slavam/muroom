@@ -1,9 +1,11 @@
 class Actor < ActiveRecord::Base
   mount_uploader :picture, PictureUploader
-  validates_numericality_of :eye_left_y, presence: true, :only_integer => true, :greater_than => 0
-  validates_numericality_of :eye_left_x, presence: true, :only_integer => true, :greater_than => 0
-  validates_numericality_of :eye_right_y, presence: true, :only_integer => true, :greater_than => 0
-  validates_numericality_of :eye_right_x, presence: true, :only_integer => true, :greater_than => 0
+  validates :title, length: { maximum: 200 }
+  validates :description, length: { maximum: 200 }
+  validates_numericality_of :eye_left_y, :only_integer => true, :greater_than => 0
+  validates_numericality_of :eye_left_x, :only_integer => true, :greater_than => 0
+  validates_numericality_of :eye_right_y, :only_integer => true, :greater_than => 0
+  validates_numericality_of :eye_right_x, :only_integer => true, :greater_than => 0
   validate  :eyes_x_coords
   validate  :picture_size
 

@@ -64,4 +64,20 @@ class ActorTest < ActiveSupport::TestCase
     @actor.eye_left_x = 200
     assert_not @actor.valid?
   end
+  
+  test "title should be at most 200 characters" do
+    @actor.title = "a" * 201
+    assert_not @actor.valid?
+  end
+  
+  test "description should be at most 200 characters" do
+    @actor.description = "a" * 201
+    assert_not @actor.valid?
+  end
+  
+  # test "title may be nil" do
+  #   @actor.title = ''
+  #   assert @actor.valid?
+  # end
+    
 end
