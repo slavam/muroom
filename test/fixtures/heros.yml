@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+gerard:
+  title: Gerard
+  picture: gerard.png
+  description: MyString
+  eye_right_x: 1
+  eye_right_y: 1
+  eye_left_x: 2
+  eye_left_y: 1
+
+two:
+  title: MyString
+  picture: MyString
+  description: MyString
+  eye_right_x: 1
+  eye_right_y: 1
+  eye_left_x: 1
+  eye_left_y: 1

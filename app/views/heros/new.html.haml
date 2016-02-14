@@ -1,10 +1,10 @@
 = javascript_include_tag 'faces'
-- provide(:title, 'Actor') 
-%h1 Actor
+- provide(:title, 'Hero') 
+%h1 Hero
 
 %div{:class => "row"}
   %div{:class => "col-md-6 "}
-    = form_for(@actor, html: { multipart: true }) do |f| 
+    = form_for(@hero, html: { multipart: true }) do |f| 
       = render 'shared/error_messages', object: f.object
       = render 'shared/face_canvas', :locals => {:f => f}
       = f.label :title 
@@ -16,7 +16,5 @@
       = f.hidden_field :eye_left_x, class: 'form-control' 
       = f.hidden_field :eye_left_y, class: 'form-control' 
       %br
-      = f.submit "Create actor", class: "btn btn-primary"
+      = f.submit "Create hero", class: "btn btn-primary"
 
-
-  

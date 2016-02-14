@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'heros/new'
+
+  get 'heros/create'
+
+  get 'heros/show'
+
   root 'categories#index'
   # get 'sessions/new'
 
@@ -10,6 +16,7 @@ Rails.application.routes.draw do
   resources :users
   resources :categories
   resources :actors
+  resources :heros
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

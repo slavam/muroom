@@ -75,9 +75,4 @@ class ActorTest < ActiveSupport::TestCase
     assert_not @actor.valid?
   end
   
-  # test "title may be nil" do
-  #   @actor.title = ''
-  #   assert @actor.valid?
-  # end
-    
 end
